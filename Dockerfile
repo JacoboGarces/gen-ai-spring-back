@@ -2,18 +2,16 @@
 # https://hub.docker.com/_/eclipse-temurin
 FROM eclipse-temurin:17-jdk-alpine
 
-# Create and change to the app directory.
+# Instala dependencias necesarias para Gradle y Java
+RUN apk add --no-cache bash curl zip unzip
+
 WORKDIR /app
 
-# Copy local code to the container image.
 COPY . ./
 
-# Build the app.
-# Da permisos de ejecución al script gradlew
 RUN chmod +x gradlew
-# Instala las dependencias de Gradle antes de construir la aplicación
-RUN ./gradlew dependencies
 
+# Puedes omitir 'gradlew dependencies', no es necesario para el build
 RUN ./gradlew build -x test
 
 # Run the app by dynamically finding the JAR file in the target directory
