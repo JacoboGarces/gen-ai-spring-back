@@ -11,6 +11,9 @@ COPY . ./
 # Build the app.
 # Da permisos de ejecución al script gradlew
 RUN chmod +x gradlew
+# Instala las dependencias de Gradle antes de construir la aplicación
+RUN ./gradlew dependencies
+
 RUN ./gradlew build -x test
 
 # Run the app by dynamically finding the JAR file in the target directory
